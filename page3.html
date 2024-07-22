@@ -72,7 +72,7 @@
 		<div class="row content-wrapper justify-content-center">
 			<div class="col-lg-7 mbr-form">
 				<div class="text-wrapper align-left" data-form-type="formoid">
-					<form action="https://api.web3forms.com/submit" method="POST" class="mbr-form form-with-styler" data-form-title="Form Name"><input type="hidden" name="access_key" data-form-email="true" value="811e1fca-6d6c-4d88-8942-1e2f6ec69d57">
+					<form action="https://api.web3forms.com/submit" method="POST" class="mbr-form form-with-styler" data-form-title="Form Name"><input type="hidden" name="access_key" value="811e1fca-6d6c-4d88-8942-1e2f6ec69d57">
 						<div class="dragArea row">
 							<div class="col-lg-12 col-md-12 col-sm-12">
 								<h1 class="mbr-section-title mbr-fonts-style mb-4 display-1">Lets <strong>Connect</strong></h1>
@@ -310,5 +310,45 @@
   
  <div id="scrollToTop" class="scrollToTop mbr-arrow-up"><a style="text-align: center;"><i class="mbr-arrow-up-icon mbr-arrow-up-icon-cm cm-icon cm-icon-smallarrow-up"></i></a></div>
     <input name="animation" type="hidden">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("web3-form");
+            const alertSuccess = document.querySelector('[data-form-alert]');
+            const alertDanger = document.querySelector('[data-form-alert-danger]');
+        
+            form.addEventListener("submit", async function (event) {
+                event.preventDefault();
+                const formData = new FormData(form);
+                const action = form.action;
+        
+                try {
+                    const response = await fetch(action, {
+                        method: "POST",
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+        
+                    if (response.ok) {
+                        alertSuccess.removeAttribute('hidden');
+                        alertDanger.setAttribute('hidden', 'hidden');
+                        form.reset();
+                    } else {
+                        const result = await response.json();
+                        alertDanger.textContent = result.message || "Oops...! some problem!";
+                        alertDanger.removeAttribute('hidden');
+                        alertSuccess.setAttribute('hidden', 'hidden');
+                    }
+                } catch (error) {
+                    alertDanger.textContent = "Failed to query the server. Check the connection and try again.";
+                    alertDanger.removeAttribute('hidden');
+                    alertSuccess.setAttribute('hidden', 'hidden');
+                }
+            });
+        });
+    </script>
   </body>
 </html>
+
