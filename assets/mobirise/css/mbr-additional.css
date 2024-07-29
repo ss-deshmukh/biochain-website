@@ -570,11 +570,12 @@ a.text-black.active {
 }
 a[class*="text-"]:not(.nav-link):not(.dropdown-item):not([role]):not(.navbar-caption) {
   position: relative;
-  background-image: transparent;
-  background-size: 10000px 2px;
+  left: 10px; /* Adjust this value to move the element */
+  background-image: none;
+  background-size: auto;
   background-repeat: no-repeat;
-  background-position: 0px 1.2em;
-  background-position: -10000px 1.2em;
+  background-position: 0 0;
+  text-align: left;
 }
 a[class*="text-"]:not(.nav-link):not(.dropdown-item):not([role]):not(.navbar-caption):hover {
   transition: background-position 2s ease-in-out;
@@ -1829,7 +1830,7 @@ a {
 }
 .cid-uiUaLkvLS2 .mbr-section-subtitle {
   color: #000000;
-  text-align: left;
+  text-align: center;
 }
 .cid-uiUaLkvLS2 .list,
 .cid-uiUaLkvLS2 .item-wrap {
